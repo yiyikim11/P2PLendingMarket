@@ -6,12 +6,14 @@
         @csrf
         <!-- Sign up option -->
 
-        <div class="flex justify-center text-l text-opacity-50">
-            <h3>New to diva? <span class="underline text-sm text-green-600 hover:text-gray-900"><a href="{{url('/register')}}">sign up here</a></span> </h3>
-
+        <div class=" justify-center items-center text-lg flex flex-col">
+            <h1>Sign in Below</h1>
+            <h1>New to diva? <span class="underline  text-green-600 hover:text-gray-900">
+                    <a href="{{url('/register')}}">sign up here</a></span>
+            </h1>
         </div>
-        <!-- Email Address -->
 
+        <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
