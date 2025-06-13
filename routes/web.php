@@ -53,4 +53,7 @@ Route::get('/lender-info-form', function () {
     return view('pages.lender-info-form');
 });
 
+
+//add this temporary 
+
 require __DIR__ . '/auth.php';
