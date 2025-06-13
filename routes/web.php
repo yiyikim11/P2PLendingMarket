@@ -23,9 +23,34 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/pages/lender-info-form', function () {
+        return view('pages.lender-info-form');
+    })->name('lender-info-form');
+
+    Route::get(('/pages/lender-info-form'), function () {
+        return view('pages.borrower-info-form');
+    })->name('borrower-info-form');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Route::get('/redirect-by-role', function () {
+//     $role = auth()->user()->role;
+
+//     if ($role === 'lender') {
+//         return redirect('/dashboard/borrower/index');
+//     } elseif ($role === 'borrower') {
+//         return redirect('/dashboard/lender/index');
+//     }
+
+//     return redirect('/');
+// })->middleware('auth');
+
+
+Route::get('/lender-info-form', function () {
+    return view('pages.lender-info-form');
 });
 
 require __DIR__ . '/auth.php';

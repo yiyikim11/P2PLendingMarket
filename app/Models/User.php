@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    // this piece below mean these are the must fill in when create acc
     protected $fillable = [
         'firstname',
         'lastname',
@@ -30,6 +32,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    // this piece tells our app to exclude psw and remembertoken when output user to the browswer
     protected $hidden = [
         'password',
         'remember_token',

@@ -50,6 +50,12 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($user->role === 'lender') {
+            return redirect('/lender-info-form');
+        } elseif ($user->role === 'borrower') {
+            return redirect('/borrower-info-form');
+        }
+
         return redirect(RouteServiceProvider::HOME);
     }
 }
