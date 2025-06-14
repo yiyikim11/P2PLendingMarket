@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\LenderProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Models\LenderProfile;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Lender Profile Routes
+    Route::get('/lender-info-form', [LenderProfileController::class, 'create'])->name('lender-profile.create');
+    Route::post('/lender-profile', [LenderProfileController::class, 'store'])->name('lender-profile.store');
 });
 
 // Route::get('/redirect-by-role', function () {
@@ -48,10 +54,6 @@ Route::middleware('auth')->group(function () {
 //     return redirect('/');
 // })->middleware('auth');
 
-
-Route::get('/lender-info-form', function () {
-    return view('pages.lender-info-form');
-});
 Route::get('/borrower-info-form', function () {
     return view('pages.borrower-info-form');
 });

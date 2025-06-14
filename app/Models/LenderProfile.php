@@ -9,6 +9,16 @@ class LenderProfile extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'occupation',
+        'salary_range',
+        'address',
+        'phone_number',
+        'id_card',
+        'profile_pic',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
