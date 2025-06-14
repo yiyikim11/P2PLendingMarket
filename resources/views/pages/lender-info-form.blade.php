@@ -22,9 +22,18 @@
 
         <!-- salary -->
         <div class="mb-4">
-            <x-input-label for="salary" :value="_('Salary')" />
-            <x-text-input id="" class="block mt-1 w-full" type="text" />
-            <x-input-error :messages="$errors->get('salary')" class="mt-2" />
+            <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">
+                Salary range<span class="text-red-500">*</span>
+            </label>
+            <select id="salary" name="salary"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                <option value="">Select salary range</option>
+                <option value="20000-30000">$20,000 - $30,000</option>
+                <option value="30000-50000">$30,000 - $50,000</option>
+                <option value="50000-75000">$50,000 - $75,000</option>
+                <option value="75000-100000">$75,000 - $100,000</option>
+                <option value="100000+">$100,000+</option>
+            </select>
         </div>
 
         <!-- address -->

@@ -52,8 +52,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/lender-info-form', function () {
     return view('pages.lender-info-form');
 });
+Route::get('/borrower-info-form', function () {
+    return view('pages.borrower-info-form');
+});
 
 
-//add this temporary 
+
 
 require __DIR__ . '/auth.php';
