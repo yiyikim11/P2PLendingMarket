@@ -56,6 +56,6 @@ class User extends Authenticatable
     }
     public function borrowerProfile()
     {
-        return $this->hasOne(LenderProfile::class);
+        return $this->hasOne(BorrowerProfile::class);
     }
 }

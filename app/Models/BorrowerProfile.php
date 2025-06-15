@@ -7,14 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class BorrowerProfile extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable=[
-      'user_id','occupation', 'salary_range', 'address', 'phone_number', 'id_card', 'bank_statement', 'profile_pic', 'facebook', 'telegram',
-    ];
+  protected $fillable = [
+    'user_id',
+    'occupation',
+    'salary_range',
+    'phone_number',
+    'address',
+    'telegram',
+    'id_card',
+    'bank_statement',
+    'facebook',
+    'profile_pic',
+  ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+  /**
+   * Get the user that owns the borrower profile.
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }
