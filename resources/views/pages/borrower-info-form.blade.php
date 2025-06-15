@@ -2,29 +2,32 @@
     <div>
         <div class="flex items-center">
             <div class="flex-1 h-2 bg-gray-200 rounded">
-                <div id="progress-bar" class="h-2 bg-green-500 rounded transition-all duration-300" style="width:50%;"></div>
+                <div id="progress-bar" class="h-2 bg-green-700 rounded transition-all duration-300" style="width:50%;"></div>
             </div>
-            <p class="ml-3 text-gray-600 text-sm ">step 1 of 2</p>
+            <p id="step-indicator" class="ml-3 text-gray-600 text-sm ">step 1 of 2</p>
         </div>
     </div>
 
-    <form id="multi-step-form" onsubmit="return false;">
+    <form method="POST" action="{{route('borrower-profile.store')}}" id="multi-step-form" >
+        @csrf
         <!-- STEP 1: Basic Information -->
         <div id="step-1" class="step-content">
+{{--            occupation--}}
             <div class="mb-4">
                 <label for="occupation" class="block text-sm font-medium text-gray-700 mb-1">
                     Occupation<span class="text-red-500">*</span>
                 </label>
-                <input type="text" id="occupation" name="occupation" placeholder="Type here"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                <x-text-input id="occupation" name="occupation" class="block mt-1 w-full" type="text" required />
+                <x-input-error :messages="$errors->get('occupation')" class="mt-2" />
             </div>
-
+{{--            salary--}}
             <div class="mb-4">
                 <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">
                     Salary range<span class="text-red-500">*</span>
                 </label>
                 <select id="salary" name="salary"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required>
                     <option value="">Select salary range</option>
                     <option value="20000-30000">$20,000 - $30,000</option>
                     <option value="30000-50000">$30,000 - $50,000</option>
@@ -32,60 +35,77 @@
                     <option value="75000-100000">$75,000 - $100,000</option>
                     <option value="100000+">$100,000+</option>
                 </select>
+                <x-input-error :messages="$errors->get('salary')" class="mt-2" />
             </div>
-
+{{--            address--}}
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700 mb-1">
                     Address<span class="text-red-500">*</span>
                 </label>
-                <textarea id="address" name="address" placeholder="Type here" rows="3"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                <x-text-input id="address" name="address" class="block mt-1 w-full" type="text" required />
+                <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
 
-            <div class="mb-6">
-                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+            <!-- phone number -->
+            <div class="mb-4">
+                <label for="phonenb" class="block text-sm font-medium text-gray-700 mb-1">
                     Phone number<span class="text-red-500">*</span>
                 </label>
-                <input type="tel" id="phone" name="phone" placeholder="Type here"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                <x-text-input id="phonenb" name="phonenb" class="block mt-1 w-full no-arrows" type="tel" required />
+                <x-input-error :messages="$errors->get('phonenb')" class="mt-2" />
             </div>
 
-            <button type="button" onclick="nextStep()"
-                class="w-full bg-green-500 text-white py-3 rounded-md font-medium hover:bg-green-600 transition-colors">
-                Next Step
-            </button>
+            <div class="flex items-center  justify-center">
+                <x-primary-button type="button" onclick="nextStep()">
+                    Next Step
+                </x-primary-button>
+            </div>
+
         </div>
 
         <!-- STEP 2: Documents & Social -->
         <div id="step-2" class="step-content hidden">
+{{--            id upload--}}
             <div class="mb-4">
                 <label for="id-upload" class="block text-sm font-medium text-gray-700 mb-2">
                     ID Card or Passport<span class="text-red-500">*</span>
                 </label>
-                <div class="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
+                <div class="border-2 border-dashed border-gray-300 rounded-md p-3 text-center">
                     <input type="file" id="id-upload" name="id_document" accept="image/*,.pdf" class="hidden" onchange="handleFileUpload(this, 'id-preview')">
-                    <button type="button" onclick="document.getElementById('id-upload').click()"
-                        class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                    <x-primary-button type="button" onclick="document.getElementById('id-upload').click()">
                         Upload
-                    </button>
+                    </x-primary-button>
                     <p id="id-preview" class="text-sm text-gray-500 mt-2">No file selected</p>
                 </div>
             </div>
-
+{{--bank statement--}}
             <div class="mb-4">
                 <label for="bank-upload" class="block text-sm font-medium text-gray-700 mb-2">
                     Bank Statement<span class="text-red-500">*</span>
                 </label>
-                <div class="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
+                <div class="border-2 border-dashed border-gray-300 rounded-md p-3 text-center">
                     <input type="file" id="bank-upload" name="bank_statement" accept="image/*,.pdf" class="hidden" onchange="handleFileUpload(this, 'bank-preview')">
-                    <button type="button" onclick="document.getElementById('bank-upload').click()"
-                        class="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+
+                    <x-primary-button type="button" onclick="document.getElementById('bank-upload').click()">
                         Upload
-                    </button>
+                    </x-primary-button>
                     <p id="bank-preview" class="text-sm text-gray-500 mt-2">No file selected</p>
                 </div>
             </div>
-
+{{--            profilepic--}}
+<div class="mb-4">
+    <label for="profile_pic" class="block text-sm font-medium text-gray-700 mb-2">
+        Profile Picture
+    </label>
+    <div class="border-2 border-dashed border-gray-300 rounded-md p-3 text-center">
+        <input type="file" id="profile_pic" name="profile_picture" accept="image/*" class="hidden" onchange="handleFileUpload(this, 'bank-preview')">
+        <x-primary-button type="button" onclick="document.getElementById('bank-upload').click()">
+            Upload
+        </x-primary-button>
+        <p id="bank-preview" class="text-sm text-gray-500 mt-2">No file selected</p>
+    </div>
+</div>
+{{--            facebook--}}
             <div class="mb-4">
                 <label for="facebook" class="block text-sm font-medium text-gray-700 mb-1">
                     Facebook<span class="text-red-500">*</span>
@@ -94,6 +114,7 @@
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
             </div>
 
+{{--            telegram--}}
             <div class="mb-6">
                 <label for="telegram" class="block text-sm font-medium text-gray-700 mb-1">
                     Telegram<span class="text-red-500">*</span>
@@ -102,15 +123,16 @@
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" required>
             </div>
 
-            <div class="flex space-x-3">
-                <button type="button" onclick="prevStep()"
-                    class="flex-1 bg-gray-500 text-white py-3 rounded-md font-medium hover:bg-gray-600 transition-colors">
+            <div class="flex space-x-3  justify-center">
+                <x-secondary-button type="button" onclick="prevStep()">
                     Previous
-                </button>
-                <button type="button" onclick="submitForm()"
-                    class="flex-1 bg-green-500 text-white py-3 rounded-md font-medium hover:bg-green-600 transition-colors">
+                </x-secondary-button>
+
+                <x-primary-button type="submit">
                     Complete
-                </button>
+                </x-primary-button>
+
+
             </div>
         </div>
     </form>

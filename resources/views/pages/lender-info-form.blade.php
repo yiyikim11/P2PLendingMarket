@@ -72,6 +72,20 @@
             <x-input-error :messages="$errors->get('id_document')" class="mt-2" />
         </div>
 
+{{--        profile pic--}}
+        <div class="mb-4">
+            <label for="id_document" class="block text-sm font-medium text-gray-700 mb-1">
+                Profile picture<span class="text-red-500">*</span>
+            </label>
+            <input type="file" id="id_document" name="profile_pic" accept=".jpg,.jpeg,.png,.pdf" class="block w-full text-sm text-gray-500
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-md file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-blue-50 file:text-blue-700
+                          hover:file:bg-blue-100" required />
+            <x-input-error :messages="$errors->get('profile_pic')" class="mt-2" />
+        </div>
+
         <div class="flex items-center justify-center mt-4">
             <x-primary-button type="submit">
                 Complete
