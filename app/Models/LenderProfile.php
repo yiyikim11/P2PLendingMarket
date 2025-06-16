@@ -23,4 +23,9 @@ class LenderProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function loanPackages(){
+        return $this->hasMany(LoanPackage::class, 'lender_id');
+    }
+
 }
