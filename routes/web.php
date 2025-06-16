@@ -52,6 +52,10 @@ Route::post('/lender-profile', [LenderProfileController::class, 'store'])->name(
 Route::get('/borrower-info-form', [BorrowerProfileController::class, 'create'])->name('borrower-profile.create');
 Route::post('/borrower-profile', [BorrowerProfileController::class, 'store'])->name('borrower-profile.store');
 
+//lender create loanpackage 
+//Route::get('/create-loanpackage',[LenderProfileController::class, 'createLoanPackage'])->name(.....);
+//Route::post.....
+
 
 
 
