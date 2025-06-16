@@ -91,6 +91,13 @@ class LenderProfileController extends Controller
         ]);
         return redirect()->route('lender.my-loans')->with('succes','Loan Package Created'); //pel redirect ng kir tv kleng lender's loan del puk kort ban drop loan klun eng 
     }
+
+    public function myLoanPackages(){
+        //get all the loan package for the current;y logged in lender 
+        $lender = auth()->guard('lender')->user();
+        $myLoans = $lender->loanPackages;
+        return view('lender.my-loans', compact('myLoans'));
+    }
     
     
 }
