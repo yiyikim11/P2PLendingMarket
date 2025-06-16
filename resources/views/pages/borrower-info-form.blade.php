@@ -8,6 +8,16 @@
             <p id="step-indicator" class="ml-3 text-gray-600 text-sm ">step 1 of 2</p>
         </div>
     </div>
+    @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mt-2 rounded mb-4">
+        <ul class="list-disc pl-5">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
 
     <form method="POST" action="{{route('borrower-profile.store')}}" id="multi-step-form" enctype="multipart/form-data">
         @csrf
@@ -144,85 +154,85 @@
     </form>
 
     <script>
-    let currentStep = 1;
-    const totalSteps = 2;
+        let currentStep = 1;
+        const totalSteps = 2;
 
-    function nextStep() {
-        // Validate current step
-        if (!validateStep(currentStep)) {
-            return;
+        function nextStep() {
+            // Validate current step
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Hide current step
+            document.getElementById(`step-${currentStep}`).classList.add('hidden');
+
+            // Show next step
+            currentStep++;
+            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+
+            // Update progress
+            updateProgress();
         }
 
-        // Hide current step
-        document.getElementById(`step-${currentStep}`).classList.add('hidden');
+        function prevStep() {
+            // Hide current step
+            document.getElementById(`step-${currentStep}`).classList.add('hidden');
 
-        // Show next step
-        currentStep++;
-        document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+            // Show previous step
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
 
-        // Update progress
-        updateProgress();
-    }
+            // Update progress
+            updateProgress();
+        }
 
-    function prevStep() {
-        // Hide current step
-        document.getElementById(`step-${currentStep}`).classList.add('hidden');
+        function updateProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const stepIndicator = document.getElementById('step-indicator');
 
-        // Show previous step
-        currentStep--;
-        document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+            const progressPercent = (currentStep / totalSteps) * 100;
+            progressBar.style.width = progressPercent + '%';
+            stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}`;
+        }
 
-        // Update progress
-        updateProgress();
-    }
+        function validateStep(step) {
+            const stepElement = document.getElementById(`step-${step}`);
+            const requiredFields = stepElement.querySelectorAll('[required]');
 
-    function updateProgress() {
-        const progressBar = document.getElementById('progress-bar');
-        const stepIndicator = document.getElementById('step-indicator');
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    alert(`Please fill in the ${field.name || field.id} field.`);
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        const progressPercent = (currentStep / totalSteps) * 100;
-        progressBar.style.width = progressPercent + '%';
-        stepIndicator.textContent = `Step ${currentStep} of ${totalSteps}`;
-    }
-
-    function validateStep(step) {
-        const stepElement = document.getElementById(`step-${step}`);
-        const requiredFields = stepElement.querySelectorAll('[required]');
-
-        for (let field of requiredFields) {
-            if (!field.value.trim()) {
-                field.focus();
-                alert(`Please fill in the ${field.name || field.id} field.`);
-                return false;
+        function handleFileUpload(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                preview.textContent = input.files[0].name;
+                preview.classList.remove('text-gray-500');
+                preview.classList.add('text-green-600');
             }
         }
-        return true;
-    }
 
-    function handleFileUpload(input, previewId) {
-        const preview = document.getElementById(previewId);
-        if (input.files && input.files[0]) {
-            preview.textContent = input.files[0].name;
-            preview.classList.remove('text-gray-500');
-            preview.classList.add('text-green-600');
+        function submitForm() {
+            // Validate final step
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Collect all form data
+            const formData = new FormData(document.getElementById('multi-step-form'));
+            const data = Object.fromEntries(formData);
+
+            console.log('Form submitted with data:', data);
+            alert('Form submitted successfully!\nCheck console for form data.');
+
+            // Here you would normally send data to your backend
+            // fetch('/submit-borrower-info', { method: 'POST', body: formData })
         }
-    }
-
-    function submitForm() {
-        // Validate final step
-        if (!validateStep(currentStep)) {
-            return;
-        }
-
-        // Collect all form data
-        const formData = new FormData(document.getElementById('multi-step-form'));
-        const data = Object.fromEntries(formData);
-
-        console.log('Form submitted with data:', data);
-        alert('Form submitted successfully!\nCheck console for form data.');
-
-        // Here you would normally send data to your backend
-        // fetch('/submit-borrower-info', { method: 'POST', body: formData })
-    }
     </script>
 </x-guest-layout>

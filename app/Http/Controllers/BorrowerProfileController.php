@@ -16,7 +16,16 @@ class BorrowerProfileController extends Controller
     // store newly created borrower profile
     public function store(Request $request)
     {
+
         Log::info('Borrower profile store request received', $request->all());
+
+        Log::info('Request all input:', $request->all());
+        Log::info('Request has files:', [
+            'id_document' => $request->hasFile('id_document'),
+            'bank_statement' => $request->hasFile('bank_statement'),
+            'profile_picture' => $request->hasFile('profile_picture'),
+        ]);
+
 
         $validated = $request->validate([
             'occupation' => 'required|string|max:255',
@@ -68,7 +77,7 @@ class BorrowerProfileController extends Controller
 
             $borrowerProfile->save();
 
-            return redirect()->route('dashboard')->with('success', 'Borrower profile created successfully!');
+            return redirect()->route('dashboard.borrower')->with('success', 'Borrower profile created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating borrower profile: ' . $e->getMessage());
             return redirect()->back()->withInput()->with('error', 'Something went wrong: ' . $e->getMessage());

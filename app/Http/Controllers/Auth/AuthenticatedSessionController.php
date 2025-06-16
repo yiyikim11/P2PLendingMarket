@@ -29,6 +29,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $role = auth()->user()->role;
+
+        if ($role === 'lender') {
+            return redirect()->route('dashboard.lender');
+        } elseif ($role === 'borrower') {
+            return redirect()->route('dashboard.borrower');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
