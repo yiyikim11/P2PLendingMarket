@@ -61,4 +61,37 @@ class LenderProfileController extends Controller
             return redirect()->back()->withInput()->with('error', 'Something went wrong. Please try again.');
         }
     }
+
+    //show form for lender to create a loan package 
+    public function createLoanPackage(){
+        return view('lender.create-loan-package'); //view tv khan loan package form
+    }
+
+    //store the loan package
+    public function storeLoanPackage(Request $request){
+        $validated = $request->validate([
+            'loan_name'=>'required|string|max:255',
+            'amount'=>'required|numeric',
+            'interest_rate'=>'required|numeric',
+            'duration'=>'required|integer',
+            'payment_frequency'=>['requireed', Rule::in(['monthly', 'weekly'])]
+        ]);
+
+        //get the logged-in lender from the lender guard
+        $lender=auth()->guard('lender')->user();
+
+        //using loanpackages() relationship in the LoanPackage model 
+        //it will automatically set lender_id 
+        $lender->loanPackages()->create([
+            'loan_name'=>$request->loan_name,
+            'amount'=>$request->amount,
+            'interest_rate'=>$rquesst->interest_rate,
+            'duration'=>$request->duration,
+            'payment_frequency'=>$request->payment_frequency,
+        ]);
+        return redirect()->route('lender.my-loans')->with('succes','Loan Package Created'); //pel redirect ng kir tv kleng lender's loan del puk kort ban drop loan klun eng 
+    }
+    
+    
 }
+
