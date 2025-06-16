@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        //tells laravel how to manage login sessions for each user type
+        'lender'=>[
+            'driver'=>'session',
+            'provider'=>'lenders',
+        ],
+        'borrower'=>[
+            'driver'=>'session',
+            'provider'=>'borrower',
+        ],
     ],
 
     /*
@@ -63,6 +73,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        //ah ng tell laravel where to look when someone tries to log in 
+        'lender'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\LenderProfile::class,
+        ],
+        'borrower'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\BorrowerProfile::class,
         ],
 
         // 'users' => [
