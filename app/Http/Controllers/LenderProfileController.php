@@ -28,7 +28,7 @@ class LenderProfileController extends Controller
             'phonenb' => 'required|string|max:20',
             'id_document' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
-//todo: pel successful login as lender hz trov redirect tv lender dashboard not the existing dashboard file
+        //todo: pel successful login as lender hz trov redirect tv lender dashboard not the existing dashboard file
         try {
             // Get the authenticated user
             $user = request()->user();
@@ -55,7 +55,7 @@ class LenderProfileController extends Controller
             // Associate with the registered user
             $user->lenderProfile()->save($lenderProfile);
 
-            return redirect()->route('/dashboard/lender/index')->with('success', 'Lender profile created successfully!');
+            return redirect()->route('dashboard.lender')->with('success', 'Lender profile created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating lender profile: ' . $e->getMessage());
             return redirect()->back()->withInput()->with('error', 'Something went wrong. Please try again.');
