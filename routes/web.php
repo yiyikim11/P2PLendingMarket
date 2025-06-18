@@ -20,6 +20,10 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
+Route::get('/confirm-password', function () {
+    return view('auth.confirm-password');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

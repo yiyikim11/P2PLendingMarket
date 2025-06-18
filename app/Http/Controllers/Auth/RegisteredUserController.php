@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        //   event(new Registered($user)); tuk verified email
 
         Auth::login($user);
 
