@@ -20,26 +20,16 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/confirm-password', function () {
-    return view('auth.confirm-password');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    //    Route::get('/pages/lender-info-form', function () {
-    //        return view('pages.lender-info-form');
-    //    })->name('lender-info-form');
-    //
-    //    Route::get(('/pages/lender-info-form'), function () {
-    //        return view('pages.borrower-info-form');
-    //    })->name('borrower-info-form');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    //  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Lender Profile Routes uncomment after edit everything bcuz u need auth to access this
     //  Route::get('/lender-info-form', [LenderProfileController::class, 'create'])->name('lender-profile.create');

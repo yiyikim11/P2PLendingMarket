@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('dashboard.borrower');
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

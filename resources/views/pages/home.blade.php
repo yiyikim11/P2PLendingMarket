@@ -23,9 +23,13 @@
                         Real solution
                     </h1>
                     <p class="text-xl mb-8">Lend as little as $20 to create a more equitable world</p>
-                    <a href="{{ route('register') }}" class="inline-block border-2 border-white rounded-lg text-white px-8 py-3 text-lg hover:bg-white hover:text-green-600 transition-colors duration-300">
+                    @auth
+                    <a href="{{auth()->user()->role==="borrower" ? route('dashboard.borrower') : route('dashboard.lender')}}" class="inline-block border-2 border-white rounded-lg text-white px-8 py-3 text-lg hover:bg-white hover:text-green-600 transition-colors duration-300">
                         Get started today
                     </a>
+                    @else
+                    <a href="{{ route('register') }}" class="nav-btn">My Dashboard</a>
+                    @endauth
                 </div>
             </div>
         </section>
