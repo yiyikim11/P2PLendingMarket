@@ -28,7 +28,7 @@
                         Get started today
                     </a>
                     @else
-                    <a href="{{ route('register') }}" class="nav-btn">My Dashboard</a>
+                    <a href="{{ route('register') }}" class="inline-block border-2 border-white rounded-lg text-white px-8 py-3 text-lg hover:bg-white hover:text-green-600 transition-colors duration-300">Get started today</a>
                     @endauth
                 </div>
             </div>
@@ -155,7 +155,7 @@
 
                     <div class="text-center md:text-left">
                         <div class="flex items-center justify-center md:justify-start mb-6">
-                            <img src="{{ asset('images/panha.png') }}" alt="Panha Hout" class="rounded-full mr-4" style="width: 80px; height: 80px; object-fit: cover;">
+                            <img alt="Panha Hout" class="rounded-full mr-4" style="width: 80px; height: 80px; object-fit: cover;">
                             <div>
                                 <h4 class="text-xl font-bold">Panha Hout</h4>
                                 <p class="text-gray-600">Web Developer</p>
